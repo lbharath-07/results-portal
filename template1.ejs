@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JNTUACEK | Results Portal</title>
+    <link rel="stylesheet" href="./index.css"/>
+</head>
+<body>
+    <nav>
+        <div class="flex-row hz-center ht">
+            <div class="logo-img">
+            </div>
+            <div class="flex-column">
+                <div class="clg-text">
+                    <button class="button" data-text="Awesome">
+                        <span class="actual-text">&nbsp;JNTUACEK&nbsp;</span>
+                        <span aria-hidden="true" class="hover-text">&nbsp;JNTUACEK&nbsp;</span>
+                    </button>
+                </div>
+                <div class="clg-full-name">
+                    Jawaharlal Nehru Technological University Ananthapur <br>College of Engineering Kalikiri (Autonomous)
+                </div>
+            </div>
+        </div>
+        
+    </nav>
+    <div class="container latest-results mt-4">
+        <h4 class="text-center" id="latest_results_title"><b>Latest Results</b></h4>
+        <div class="result_search">
+            <label for="variable">
+                Show
+                <select name="variable" id="variable" onchange="handleChange(this.value)">
+                    <option value="10" >default</option>
+                    <option value="10">10</option>
+                    <option value="25">25</option>
+                    <option value="50">50</option>
+                    <option value="100">100</option>
+                </select>
+                Results
+            </label>
+            <label for="search">
+                Search:
+                <input type="search" name="search" id="search" placeholder="Search...">
+            </label>
+        </div>
+        <table class="thead">
+            <tr>
+                <th class="sno">S.No</th>
+                <th class="links">Result Links</th>
+                <th>Results Date</th>
+            </tr>
+            <div id="data-container">
+                <% var i=offset+1; %>
+                <% regulations.forEach(function(regulation1) { %>
+                    <tr class="odd">
+                        <td class="odd_num">
+                            <%=i++ %>
+                        </td>
+                        <td class="odd_link">
+                    <a href="form?id=<%= regulation1.id %>">
+                        B.Tech <%= toRoman(regulation1.academic_year) %> Year <%= toRoman(regulation1.academic_sem) %> Semester (<%= regulation1.regulation %>) <%= regSep(regulation1.reg_or_sup) %> Examinations, <%= regulation1.exam_month %> <%= regulation1.results_date.getFullYear() %> 
+                    </a>    
+                    <br> <!-- Add line break for better readability -->
+                    </td>
+                <td><%= regulation1.results_date.toDateString() %></td></tr>
+                <% }); %>
+            </div>
+
+        </table>
+        
+                <%
+                function toRoman(num) {
+                    const romanNumeralMap = {
+                        1: 'I',
+                        2: 'II',
+                        3: 'III',
+                        4: 'IV'
+                    };
+                
+                    return romanNumeralMap[num];
+                }
+                function regSep(num){
+                    const rs = {
+                        1 : "Regular",
+                        0 : "Supplementary"
+                    };
+                    return rs[num];
+                }
+                %>
+               
+                <div class="paging">
+                    <% if (currentPage > 1) { %>
+                        <a href="?page=<%= currentPage - 1 %>">Previous</a>
+                    <% } %>
+                
+                    <% for (let i = 1; i <= totalPages; i++) { %>
+                        <a href="?page=<%= i %>"><%= i %></a>
+                    <% } %>
+                
+                    <% if (currentPage < totalPages) { %>
+                        <a href="?page=<%= currentPage + 1 %>">Next</a>
+                    <% } %>
+                </div>
+            </div>
+            <script>
+    function handleChange(event) {
+        event.preventDefault();
+        const selectedValue = document.getElementById('variable').value;
+        const search = document.getElementById('search').value;
+        fetch(`/?page=1&limit=${selectedValue}&search=${search}`, {
+            method: 'GET'
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Failed to update variable');
+            }
+            console.log('Variable updated successfully');
+            window.location='/?page=1&limit='+selectedValue+'&search='+search; 
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+    document.getElementById('variable').addEventListener('change', handleChange);
+    document.getElementById('search').addEventListener('input', handleChange);
+</script>
+
+            
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JNTUACEK | Admin Results Portal</title>
+  <link rel='stylesheet' href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css'><link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:dashboard.partial.html -->
+<div class="sidebar">
+  <div class="logo-details">
+    <div class="logo_name">ADMIN PORTAL</div>
+    <i class='bx bx-menu' id="btn"></i>
+  </div>
+  <ul class="nav-list">
+    <li>
+      <i class='bx bx-search'></i>
+      <input type="text" placeholder="Search...">
+      <span class="tooltip">Search</span>
+    </li>
+    <li>
+      <a href="/">
+        <i class='bx bx-grid-alt'></i>
+        <span class="links_name">Dashboard</span>
+      </a>
+      <span class="tooltip">Dashboard</span>
+    </li>
+   
+    <li>
+      <a href="/students">
+        <i class='bx bx-group'></i>
+        <span class="links_name">Students</span>
+      </a>
+      <span class="tooltip">Students</span>
+    </li>
+    <li>
+      <a href="/regulations">
+        <i class='bx bx-receipt'></i>
+        <span class="links_name">Regulations</span>
+      </a>
+      <span class="tooltip">Regulations</span>
+    </li>
+    <li>
+      <a href="/AdminResults">
+        <i class='bx bx-folder'></i>
+        <span class="links_name">Results</span>
+      </a>
+      <span class="tooltip">Results</span>
+    </li>
+    <li>
+      <a href="/modifications">
+        <i class='bx bx-edit-alt'></i>
+        <span class="links_name">Modifications</span>
+      </a>
+      <span class="tooltip">Modifications</span>
+    </li>
+    <li>
+      <a href="/backlogs">
+        <i class='bx bx-log-out-circle' ></i>
+        <span class="links_name">Backlogs</span>
+      </a>
+      <span class="tooltip">Backlogs</span>
+    </li>
+    <li class="profile">
+      <div class="profile-details">
+        <img src="https://static.vecteezy.com/system/resources/previews/021/548/095/original/default-profile-picture-avatar-user-avatar-icon-person-icon-head-icon-profile-picture-icons-default-anonymous-user-male-and-female-businessman-photo-placeholder-social-network-avatar-portrait-free-vector.jpg" alt="profileImg" class="profile-img">
+        <div class="name_job">
+          <div class="name">Admin </div>
+          <div class="job">JNTUACEK Results Admin</div>
+        </div>
+      </div>
+      <i class='bx bx-log-out' id="log_out"></i>
+    </li>
+  </ul>
+</div>
+<section class="home-section">
+  <div class="text">Modifications</div>
+  <div class="hr"></div>
+  <div class="all-options">
+        <div class="filters">
+            <label for="student-rows"> Show
+            <select name="student-rows" id="student-rows">
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+            </select>
+            Entries
+        </label>
+        <label for="student-search">Search: 
+            <input type="search" name="student-search" id="student-search"></label>
+    </div>
+</div>
+<div class="latest-modifications">
+    <div class="modifications">
+      <table class="modifications-table">
+        <tr>
+          <th rowspan="2">S.No</th>
+          <th colspan="5">Modification</th>
+          <th rowspan="2">Modification date</th>
+        </tr><tr>
+          <th>Table Name</th>
+          <th>Column Name</th>
+          <th>id</th>
+          <th>previous value</th>
+          <th>New Value</th>
+        </tr>
+        <% i=1 %>
+        <% modifications.forEach(modification => {%>
+        <tr>
+          <td><%= i++ %></td>
+          <td><%= modification.table_name %></td>
+          <td><%= modification.column_name %></td>
+          <td><%= modification.change_id %></td>
+          <td><%= modification.previous_value %></td>
+          <td><%= modification.new_value %></td>
+          <td><%= modification.modification_date %></td>
+        </tr>
+        <%}); %>
+      </table>
+    </div>
+  </div>
+
+</section>
+<!-- partial -->
+  <script  src="./script1.js"></script>
+
+</body>
+</html>
